@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     # local apps
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
+    
+    # tird party apps
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,10 @@ MEDIA_ROOT = MEDIA_DIR
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
