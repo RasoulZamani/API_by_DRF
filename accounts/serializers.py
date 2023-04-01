@@ -9,9 +9,10 @@ def clean_name(value):
 
     
 class UserRegisterSerial(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(required=True, write_only=True)
     class Meta:
         model = User
-        fields = ('username','email', 'password')
+        fields = ('username','email', 'password','confirm_password')
         extra_kwargs = {
             'password': {'write_only':True},
             'username': {'validators':(clean_name,)},
@@ -27,8 +28,8 @@ class UserRegisterSerial(serializers.ModelSerializer):
             raise serializers.ValidationError('username cant be admin')
         return value
     
-    # def validate(self, data):
-    #     """obj level valiation for password confirmation"""
-    #     if data['password'] != data['confirm_password']:
-    #         raise serializers.ValidationError('passwords should be equal')
-    #     return data  
+    def validate(self, data):
+        """obj level valiation for password confirmation"""
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError('passwords should be equal')
+        return data  
