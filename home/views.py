@@ -4,7 +4,7 @@ from .models import Person, Answer, Question
 from .serializers import PersonSerial, QuestionSerial, AnswerSerial
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-
+from permissions import IsOwnerOrReadonly
 
 class HomeView(APIView): 
     permission_classes = [IsAuthenticated,]
@@ -21,6 +21,7 @@ class HomeView(APIView):
         return Response({'greating':name}) 
     
 class QuestionListView(APIView):
+    
     def get(self, request, pk=None):
         questions = Question.objects.all()
         ser_quest  = QuestionSerial(instance=questions, many=True)
@@ -28,6 +29,8 @@ class QuestionListView(APIView):
 
 
 class QuestionCreateView(APIView):
+    permission_classes = [ IsAuthenticated,]    
+
     def post(self, request, pk=None):
         ser_quest = QuestionSerial(data=request.data)
         if ser_quest.is_valid():
@@ -37,6 +40,8 @@ class QuestionCreateView(APIView):
     
 
 class QuestionUpdateView(APIView):
+    permission_classes = [IsOwnerOrReadonly,]
+    
     def put(self, request, pk):
         question   = Question.objects.get(pk=pk)
         ser_quest = QuestionSerial(instance=question, data= request.data, partial=True)
@@ -47,6 +52,8 @@ class QuestionUpdateView(APIView):
     
 
 class QuestionDeleteView(APIView):
+    permission_classes = [IsOwnerOrReadonly,]
+    
     def delete(self, request, pk):
         qestion   = Question.objects.get(pk=pk)
         qestion.delete()
