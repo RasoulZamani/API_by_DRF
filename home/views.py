@@ -20,12 +20,14 @@ class HomeView(APIView):
         name = request.data['name']
         return Response({'greating':name}) 
     
-class QuestionView(APIView):
+class QuestionListView(APIView):
     def get(self, request, pk=None):
         questions = Question.objects.all()
         ser_quest  = QuestionSerial(instance=questions, many=True)
         return Response(data=ser_quest.data, status=status.HTTP_200_OK)
 
+
+class QuestionCreateView(APIView):
     def post(self, request, pk=None):
         ser_quest = QuestionSerial(data=request.data)
         if ser_quest.is_valid():
@@ -33,6 +35,8 @@ class QuestionView(APIView):
             return Response(ser_quest.data, status.HTTP_201_CREATED)
         return Response(ser_quest.errors, status.HTTP_400_BAD_REQUEST)
     
+
+class QuestionUpdateView(APIView):
     def put(self, request, pk):
         question   = Question.objects.get(pk=pk)
         ser_quest = QuestionSerial(instance=question, data= request.data, partial=True)
@@ -41,9 +45,10 @@ class QuestionView(APIView):
             return Response(ser_quest.data, status.HTTP_200_OK)
         return Response(ser_quest.errors, status.HTTP_400_BAD_REQUEST)
     
+
+class QuestionDeleteView(APIView):
     def delete(self, request, pk):
         qestion   = Question.objects.get(pk=pk)
         qestion.delete()
         return Response({'message':'question was deleted successfully'}, status.HTTP_200_OK)
- 
-           
+            
