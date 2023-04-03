@@ -33,3 +33,9 @@ class UserRegisterSerial(serializers.ModelSerializer):
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError('passwords should be equal')
         return data  
+    
+
+class UserSerial(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
