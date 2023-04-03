@@ -1,6 +1,6 @@
 # DRF: Django Rest Framework
 
-This repo is implementation of DRF consepts throuhg the Mongard course. In my journary I learned importance of **DRF** and ** Restful API**. 
+This repo is implementation of DRF consepts throuhg the Mongard course. In my journary I learned importance of **DRF** and **Restful API**. 
 
 ## Question/Answer API
 
@@ -8,4 +8,5 @@ At first API for registering and creating token implemented, after creating mode
 Permisions is handled based on Token Authentication and for more control custom permission file is written.
 CRUD for user model created by ViewSets.
 we used **jwt** token by `djangorestframework_siimplejwt` library.
+for better documentaion, we also prepear **swagger** and it is accecable at: .../schema/swager-ui .
 
